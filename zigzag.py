@@ -24,22 +24,16 @@ def convert2(s: str, numRows: int) -> str:
     lst = []
     incr = 2 * (numRows - 1)
     n = len(s)
-    def append_valid(ix, lst, dict_lst):
-        if 0 <= ix < n:
-            lst.append(s[ix])
-            dict_lst.append(ix)
-    dict = {}
+    append_valid = lambda ix, lst: lst.append(s[ix]) if 0 <= ix < n else None
     for row in range(numRows):
-        dict[row] = []
         index = 0
         while index - row < n:
             if 0 < row < numRows - 1:
-                append_valid(index - row, lst, dict[row])
-            append_valid(index + row, lst, dict[row])
+                append_valid(index - row, lst)
+            append_valid(index + row, lst)
             index += incr
-    print(dict)
     return "".join(lst)
 
 
-print(convert("PAYPALISHIRING", 3))
-print(convert2("ABCD", 3))
+print(convert("PAYPALISHIRING", 3)) # slower O(nlogn) solution
+print(convert2("ABCD", 3)) # faster O(n) soln
